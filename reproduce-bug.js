@@ -8,7 +8,7 @@ const execShellCommand = require("./execShellCommand");
 async function reproduceBug() {
   // Repository info
   const repositoryUrl =
-    "https://github.com/acailly/zDemocracy-lowtech-data.git";
+    "https://github.com/acailly/isomorphic-git-issue-1275.git";
 
   // Create local repository folder
   const localFolder = path.join(__dirname, "local-repo");
