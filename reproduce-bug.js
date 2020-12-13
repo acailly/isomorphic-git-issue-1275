@@ -5,7 +5,9 @@ const path = require("path");
 const fs = require("fs");
 const execShellCommand = require("./execShellCommand");
 
-async function reproduceBug() {
+async function reproduceBug(branchName) {
+  console.log(`=== Trying to reproduce the bug on branch ${branchName} ===`);
+
   // Repository info
   const repositoryUrl =
     "https://github.com/acailly/isomorphic-git-issue-1275.git";
@@ -18,7 +20,10 @@ async function reproduceBug() {
   await makeDir(localFolder);
 
   // Clone using native git
-  await execShellCommand(`git clone ${repositoryUrl} .`, localFolder);
+  await execShellCommand(
+    `git clone ${repositoryUrl} --branch ${branchName} .`,
+    localFolder
+  );
 
   // Show file status using isomorphic-git
   const actualStatus = await git.status({
@@ -39,4 +44,11 @@ async function reproduceBug() {
   console.log(expectedStatus);
 }
 
-reproduceBug();
+async function run() {
+  await reproduceBug("main");
+
+  // Uncomment this to force LF line break with a .gitattributes file
+  // await reproduceBug("fix-force-lf");
+}
+
+run();
